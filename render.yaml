@@ -1,0 +1,24 @@
+# Render Blueprint for the Pulse API (free tier).
+# Deploy: push this repo to GitHub, then in Render: New + → Blueprint → pick the repo.
+# The database is rebuilt from backend/data/processed/*.csv on every startup,
+# so the free tier's ephemeral disk is fine.
+services:
+  - type: web
+    name: pulse-api
+    runtime: python
+    plan: free
+    rootDir: backend
+    buildCommand: pip install -r requirements.txt
+    startCommand: uvicorn app.main:app --host 0.0.0.0 --port $PORT
+    healthCheckPath: /api/health
+    envVars:
+      - key: PYTHON_VERSION
+        value: 3.12.7
+      # Set to your deployed frontend origin, e.g. https://pulse-xyz.vercel.app
+      - key: PULSE_CORS_ORIGINS
+        sync: false
+      # Optional — enables the Claude "Explain this chart" feature.
+      - key: ANTHROPIC_API_KEY
+        sync: false
+      - key: PULSE_ANTHROPIC_MODEL
+        value: claude-haiku-4-5

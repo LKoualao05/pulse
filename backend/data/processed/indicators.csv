@@ -1,0 +1,9 @@
+key,source_key,name,unit,category,description,value_type
+suicide_rate,who_gho,Suicide mortality rate (age-standardized),"per 100,000 population",outcome,"Age-standardized suicide deaths per 100,000 people, both sexes. A core mental-health outcome indicator.",numeric
+psychiatrists,who_gho,Psychiatrists working in the mental-health sector,"per 100,000 population",capacity,Density of psychiatrists — a proxy for mental-health system capacity.,numeric
+depression_prevalence,who_gho,Estimated prevalence of depression,% of population,burden,"WHO estimated population-based prevalence of depression. Note: a single-year (2015) cross-sectional snapshot, not a time series.",numeric
+health_expenditure_pc,world_bank,Current health expenditure per capita,current US$,context,Total health spending per person — system-investment context.,numeric
+unemployment,world_bank,Unemployment rate,% of total labor force,context,Modeled ILO estimate — a socioeconomic stressor often linked to well-being.,numeric
+gdp_per_capita,world_bank,GDP per capita,current US$,context,Economic output per person — broad prosperity context.,numeric
+life_expectancy,world_bank,Life expectancy at birth,years,context,Overall population health context.,numeric
+mh_policy,owid,Stand-alone mental-health policy or plan,status,governance,"Whether a country reports a stand-alone mental-health policy or plan (WHO Mental Health Atlas, served by Our World in Data).",categorical

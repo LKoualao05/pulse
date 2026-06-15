@@ -1,0 +1,64 @@
+name: Daily data refresh
+
+# Re-fetches the public datasets once a day, runs the pipeline, and commits the
+# refreshed data ONLY if the underlying observations actually changed.
+#   - Runs the test suite first and aborts if it fails.
+#   - Commits ONLY data artifacts (backend/data/processed) — never source code.
+#   - No empty/noise commits: the volatile access-date stamp is discarded unless
+#     the real data (observations) changed.
+
+on:
+  schedule:
+    - cron: "17 6 * * *" # 06:17 UTC daily
+  workflow_dispatch: {} # allow manual runs
+
+permissions:
+  contents: write
+
+concurrency:
+  group: daily-refresh
+  cancel-in-progress: false
+
+jobs:
+  refresh:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+          cache-dependency-path: backend/requirements-dev.txt
+
+      - name: Install dependencies
+        working-directory: backend
+        run: pip install -r requirements-dev.txt
+
+      - name: Run tests (abort refresh if they fail)
+        working-directory: backend
+        run: python -m pytest -q
+
+      - name: Re-fetch datasets and rebuild artifacts
+        working-directory: backend
+        run: python -m app.ingest.run
+
+      - name: Commit refreshed data only if it changed
+        run: |
+          set -euo pipefail
+          # Sentinel: the actual data. If observations + catalog are unchanged,
+          # discard the date-only churn in sources.csv / summary.json so we never
+          # make a noise commit.
+          if git diff --quiet -- backend/data/processed/observations.csv backend/data/processed/indicators.csv; then
+            echo "No data changes — discarding metadata churn and skipping commit."
+            git checkout -- backend/data/processed
+            exit 0
+          fi
+
+          echo "Data changed — committing refreshed artifacts."
+          git config user.name  "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          # Scope strictly to data — source code is never touched here.
+          git add backend/data/processed
+          git commit -m "data: daily refresh $(date -u +%Y-%m-%d)"
+          git push

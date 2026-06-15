@@ -1,0 +1,13 @@
+# Pulse backend — pinned runtime dependencies
+# (kept deliberately small; each line is a hard pin for reproducible builds)
+# Versions chosen to pass `pip-audit` with no known vulnerabilities.
+fastapi==0.137.0
+uvicorn[standard]==0.34.0
+pydantic==2.10.4
+pydantic-settings==2.7.0
+SQLAlchemy==2.0.36
+requests==2.34.2
+slowapi==0.1.9
+pycountry==24.6.1
+anthropic==0.109.1
+python-dotenv==1.2.2
