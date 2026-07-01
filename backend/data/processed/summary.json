@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-06-14",
+  "generated_at": "2026-07-01",
   "indicators": [
     {
       "indicator_key": "suicide_rate",
@@ -82,14 +82,14 @@
       "unit": "current US$",
       "category": "context",
       "value_type": "numeric",
-      "observation_count": 11544,
+      "observation_count": 11737,
       "countries": 213,
       "year_min": 1960,
-      "year_max": 2024,
-      "latest_year": 2024,
-      "global_latest_mean": 21312.217,
-      "top_country": "Monaco",
-      "top_value": 288001.433
+      "year_max": 2025,
+      "latest_year": 2025,
+      "global_latest_mean": 19595.668,
+      "top_country": "Luxembourg",
+      "top_value": 147252.179
     },
     {
       "indicator_key": "life_expectancy",
