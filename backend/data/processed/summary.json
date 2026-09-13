@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-07-15",
+  "generated_at": "2026-09-13",
   "indicators": [
     {
       "indicator_key": "suicide_rate",
@@ -97,9 +97,9 @@
       "unit": "years",
       "category": "context",
       "value_type": "numeric",
-      "observation_count": 14006,
+      "observation_count": 6480,
       "countries": 216,
-      "year_min": 1960,
+      "year_min": 1995,
       "year_max": 2024,
       "latest_year": 2024,
       "global_latest_mean": 73.983,
